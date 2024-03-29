@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1= title
+  - let results = [{ name: 'Tropical Aquarium', size: 'Large', waterType: 'Freshwater' },{ name: 'Reef Aquarium', size: 'Medium', waterType: 'Saltwater' },{ name: 'Coldwater Aquarium', size: 'Small', waterType: 'Freshwater' }]
+
+  .container-fluid
+  .row 
+    - results.forEach((aquarium, index) => {
+      .col-sm-2(onclick=`buy(${index})`)
+        .card
+          .card-body
+            h3 #{aquarium.name}
+            p Size: #{aquarium.size}
+            p Water Type: #{aquarium.waterType}
+    - })
+  
+  script.
+    function buy(index) {
+      alert(`You purchased item ${index}`);
+    }
+
