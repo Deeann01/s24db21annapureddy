@@ -1,0 +1,17 @@
+extends layout
+ 
+block content
+  - let items = results
+  .container-fluid
+    .row
+      each item, index in items
+        .col-sm-4
+          .aquarium(onclick=`buy(${index})`)
+            h3 #{item.aquarium_type}
+            p size: #{item.size}
+            p cost: #{item.cost}
+        
+  script.
+    function buy(index) {
+      alert("You purchased item " + index);
+    }

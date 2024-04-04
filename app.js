@@ -1,3 +1,5 @@
+// app.js
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -6,9 +8,13 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var Aquariumclass=require('./routes/Aquariums');
-var gridRouter=require('./routes/grid');
-var pickRouter=require('./routes/pick');
+var AquariumRouter = require('./routes/Aquariums');
+var gridRouter = require('./routes/grid');
+var pickRouter = require('./routes/pick');
+var resourceRouter=require('./routes/resource')
+
+// Import the aquarium model
+const Aquarium = require('./models/aquarium');
 
 var app = express();
 
@@ -24,10 +30,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/Aquariums',Aquariumclass);
-app.use('/grid',gridRouter);
-app.use('/pick',pickRouter);
-
+app.use('/Aquariums', AquariumRouter);
+app.use('/grid', gridRouter);
+app.use('/pick', pickRouter);
+app.use('/resource', resourceRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -44,6 +50,48 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// MongoDB connection setup
+require('dotenv').config();
+const connectionString = process.env.MONGO_CON;
+const mongoose = require('mongoose');
+mongoose.connect(connectionString);
+
+// Get the default connection
+var db = mongoose.connection;
+// Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once("open", function(){
+  console.log("Connection to DB succeeded")
+});
+
+async function recreateDB() {
+  await Aquarium.deleteMany();
+
+  let instance1 = new Aquarium({ aquarium_type: "Coldwater", size: 'large', cost: 300 });
+  instance1.save().then(doc => {
+    console.log("First object saved")
+  }).catch(err => {
+    console.error(err)
+  });
+
+  let instance2 = new Aquarium({ aquarium_type: "Freshwater", size: 'small', cost: 200 });
+  instance2.save().then(doc => {
+    console.log("Second object saved")
+  }).catch(err => {
+    console.error(err)
+  });
+
+  let instance3 = new Aquarium({ aquarium_type: "Planted aquarium", size: 'extra large', cost: 400 });
+  instance3.save().then(doc => {
+    console.log("Third object saved")
+  }).catch(err => {
+    console.error(err)
+  });
+}
+
+let reseed = true;
+if (reseed) {
+  recreateDB();
+}
+
 module.exports = app;
-
-

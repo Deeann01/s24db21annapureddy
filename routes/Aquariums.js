@@ -7,4 +7,11 @@ router.get('/', function(req, res, next) {
 });
 
 module.exports = router;
- 
+
+
+var express = require('express');
+const aquarium_controlers= require('../controllers/aquarium');
+var router = express.Router();
+/* GET aquarium */
+router.get('/', aquarium_controlers.aquarium_view_all_Page );
+module.exports = router;
