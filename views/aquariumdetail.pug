@@ -1,0 +1,23 @@
+//- Aquarium Detail Pug template
+
+extends layout
+
+block content
+  h1= title
+  - let aquariumid = toShow._id
+  - let aquarium_type = toShow.aquarium_type
+  - let aquariumcost = toShow.cost
+  - let aquariumsize = toShow.size
+  div
+    div.row
+      div(class='aqauriumAttr mr-3') Aquarium ID is:
+      div #{aquariumid}
+    div.row
+      div(class='aquariumAttr mr-3') Aquarium Type is:
+      div #{aquarium_type}
+    div.row
+      div(class='aquariumAttr mr-3') Aquarium Size is:
+      div #{aquariumsize}
+    div.row
+      div(class='aquariumAttr mr-3') Aquarium Cost is:
+      div #{aquariumcost}

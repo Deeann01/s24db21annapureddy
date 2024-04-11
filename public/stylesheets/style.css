@@ -6,3 +6,15 @@ body {
 a {
   color: #00B7FF;
 }
+
+.aquariumAttr {
+  background-color: aquamarine;
+  width:120px;
+}
+
+form
+{
+  color:blue;
+  position:relative;
+  left:100px;
+}

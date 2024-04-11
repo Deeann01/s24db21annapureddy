@@ -1,0 +1,44 @@
+extends layout
+
+block content
+    h1= title
+
+    if (toShow == null)
+        h2 No instance to update
+    else
+        - let aquariumid = toShow._id
+        - let aquarium_type = toShow.aquarium_type
+        - let size = toShow.size
+        - let cost = toShow.cost
+        div.row(class='mb-2')
+            div.mr-1 ID is
+                div #{aquariumid}
+                - let actionid = "/resource/aquarium/" + aquariumid
+                form(id='aquariumForm', action= actionid, method="POST")
+                    div.form-group
+                        label.aquariumAttr(for='aquarium_type') aquarium Type
+                        input#aquarium_type(type='text' name='aquarium_type', value= aquarium_typeg)
+                    div.form-group
+                        label.aquariumAttr(for='size') aquarium Size
+                        input#size(type='text' name='size', value= size)
+                    div.form-group
+                        label.aquariumAttr(for='cost') aquarium Price
+                        input#cost(type='number' name='cost', value= cost)
+                    input(type="submit")
+    script.
+        document.forms['aquariumForm'].addEventListener('submit', (event) => {
+            event.preventDefault();
+            // TODO do something here to show user that form is being submitted
+            fetch(event.target.action, {
+                method: 'PUT',
+                body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+            }).then((resp) => {
+                return resp.text(); // or resp.text() or whatever the server sends
+            }).then((body) => {
+                alert("Update succeeded")
+                // TODO handle body
+            }).catch((error) => {
+                // TODO handle error
+                alert("Update failed " + error )
+            });
+        });

@@ -1,0 +1,36 @@
+extends layout
+
+block content
+  .container
+    .row
+      .col-md-6.mx-auto
+        h1= title
+        form(id='aquariumForm', action="/resource/aquarium", method="POST")
+          .form-group
+            label.aquariumAttr(for='aquarium_type') aquarium Type
+            input#aquarium_type(type='text', name='aquarium_type', class='form-control')
+          .form-group
+            label.aquariumAttr(for='size') aquarium Size
+            input#size(type='text', name='size', class='form-control')
+          .form-group
+            label.aquariumAttr(for='price') aquarium Cost
+            input#cost(type='number', name='cost', class='form-control')
+          button.btn.btn-primary(type="submit") Submit
+
+        script.
+          document.forms['aquariumForm'].addEventListener('submit', (event) => {
+            event.preventDefault();
+            // TODO do something here to show user that form is being submitted
+            fetch(event.target.action, {
+              method: 'POST',
+              body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+            }).then((resp) => {
+              return resp.json(); // or resp.text() or whatever the server sends
+            }).then((body) => {
+              alert("Save succeeded");
+              // TODO handle body
+            }).catch((error) => {
+              // TODO handle error
+              alert("Save failed " + error );
+            });
+          });

@@ -1,0 +1,52 @@
+extends layout
+
+block content
+    h1= title
+    if (toShow == null)
+        h2 No instance to delete
+    else
+        - let aquariumid = toShow._id
+        - let aquarium_type = toShow.aquarium_type
+        - let size = toShow.size
+        - let cost = toShow.cost
+        - let actionid = "/resource/aquarium/" + aquariumid
+        script.
+            let actionid = "#{actionid}"
+        div
+            div.row
+                div(class='aquariumAttr mr-3') aquarium ID is:
+                div #{aquariumid}
+            div.row
+                div(class='aquariumAttr mr-3') aquarium Type is:
+                div #{aquarium_type}
+            div.row
+                div(class='aquariumAttr mr-3') aquarium Size is:
+                div #{size}
+            div.row
+                div(class='aquariumttr mr-3') aquarium Price is:
+                div #{cost}
+        button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+        button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+        
+    script.
+        function cancel() {
+            // Go back to the home page for the aquarium collection
+            window.location.href='/aquarium'
+        }
+    script.
+        function deleteOnid() {
+            console.log("starting delete")
+            // delete first
+            fetch(actionid, {
+                method: 'DELETE' // Don't need a body for the delete
+            }).then((resp) => {
+                return resp.text(); // or resp.text() or whatever the server sends
+            }).then((body) => {
+                alert("Delete succeeded")
+                window.location.href='/aquarium'
+                // TODO handle body
+            }).catch((error) => {
+                // TODO handle error
+                alert("Delete failed " + error )
+            });
+        }
