@@ -1,17 +1,19 @@
 extends layout
- 
+
 block content
   - let items = results
   .container-fluid
-    .row
-      each item, index in items
-        .col-sm-4
+    .row.m-1
+      each item in items
+        - let destination = `/Aquariums/update?id=${item._id}`
+        .row-sm-2.m-1
           .aquarium(onclick=`buy(${index})`)
             h3 #{item.aquarium_type}
             p size: #{item.size}
             p cost: #{item.cost}
-        
+            button.btn.btn-primary.ml-1(onclick=`dispatch("${destination}")`) Update
+
   script.
-    function buy(index) {
-      alert("You purchased item " + index);
+    function dispatch(path){
+      window.location.href = path;
     }
