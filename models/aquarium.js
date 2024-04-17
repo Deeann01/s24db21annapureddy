@@ -12,12 +12,12 @@ const aquariumSchema = new mongoose.Schema({
   size: {
     type : String,
     required: [true, "size field needs to be entered"],
-    minlength : [2, "size must be at least 2"],
+    minsize : [2, "size must be at least 2"],
 },
   cost: {
     type : Number,
     required: [true, "Cost fied needs to be entered"],
-    min: [1, "Cost must be atleast $1"]
+    mincost: [1, "Cost must be atleast $1"]
   }
 });
 
