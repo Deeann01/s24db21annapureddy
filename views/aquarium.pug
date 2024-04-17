@@ -2,16 +2,22 @@ extends layout
 
 block content
   - let items = results
+  - let createDestination = "/aquariums/create"
+  button.btn.btn-primary.ml-1(onclick=`dispatch("${createDestination}")`) Create new aquarium type
   .container-fluid
     .row.m-1
-      each item in items
-        - let destination = `/Aquariums/update?id=${item._id}`
+      each item, index in items
+        - let updateDestination = `/aquariums/update?id=${item._id}`
+        - let detailDestination = `/aquariums/detail?id=${item._id}`
+        - let deleteDestination = `/aquariums/delete?id=${item._id}`
         .row-sm-2.m-1
           .aquarium(onclick=`buy(${index})`)
             h3 #{item.aquarium_type}
             p size: #{item.size}
             p cost: #{item.cost}
-            button.btn.btn-primary.ml-1(onclick=`dispatch("${destination}")`) Update
+            button.btn.btn-primary.ml-1(onclick=`dispatch("${updateDestination}")`) Update
+            button.btn.btn-primary.ml-1(onclick=`dispatch("${detailDestination}")`) Detail
+            button.btn.btn-primary.ml-1(onclick=`dispatch("${deleteDestination}")`) Delete
 
   script.
     function dispatch(path){

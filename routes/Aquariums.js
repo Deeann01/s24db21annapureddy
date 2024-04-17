@@ -25,13 +25,10 @@ const secured = (req, res, next) => {
 
 /* GET aquarium */
 router.get('/', aquarium_controlers.aquarium_view_all_Page );
-router.get('/detail', aquarium_controlers.aquarium_view_one_Page);
 router.get('/create', aquarium_controlers.aquarium_create_Page);
-// router.get('/update', aquarium_controlers.aquarium_update_Page);
-router.get('/delete', aquarium_controlers.aquarium_delete_Page);
-
-/* GET update costume page */
+router.get('/detail', secured, aquarium_controlers.aquarium_view_one_Page);
 router.get('/update', secured, aquarium_controlers.aquarium_update_Page);
+router.get('/delete', secured, aquarium_controlers.aquarium_delete_Page);
 
 module.exports = router;
 
