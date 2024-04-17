@@ -1,20 +1,12 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to My World
-  button(type="button", class="btn btn-secondary", , onclick="double()") I am a Button
-  div#double Up the amount 
-  
-  script.  
-    var value = 0;
-    var power = 1;
-
-    function double() {
-        value += 1;
-        power *= 2;
-        document.getElementById('double').innerText = `Two to the power ${value} is ${power}`;
-    }
-
-
-  a(href="/Aquariums") Go to Aquarium Search Results
+  if (!user)
+    a(href="/login") Login
+    br
+    a(href="/register") Register
+  else
+    p You are currently logged in as #{user.username}
+    a(href="/aquarium") Take me to aquariums
+    br
+    a(href="/logout") Logout
