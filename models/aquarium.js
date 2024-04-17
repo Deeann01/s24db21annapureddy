@@ -17,7 +17,7 @@ const aquariumSchema = new mongoose.Schema({
   cost: {
     type : Number,
     required: [true, "Cost fied needs to be entered"],
-    mincost: [1, "Cost must be atleast $1"]
+    mincost: [1, "Cost must be at least $1"]
   }
 });
 
